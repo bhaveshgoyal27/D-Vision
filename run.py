@@ -6,6 +6,7 @@ from obj import obj
 from stairs import stairs
 from emotion import emotion
 from example import lie
+from faces import facr
 
 st.markdown('<style>body{background-color:powderblue;}</style>',unsafe_allow_html=True)
 
@@ -17,7 +18,8 @@ ch = st.sidebar.selectbox(
         "Object Detector",
         "Stairs Detection",
         "Emotion Detection",
-        "Lie Detection"
+        "Lie Detection",
+        "FACE RECOGNITION"
     ],
     key="main_select",
     )
@@ -57,7 +59,7 @@ elif ch=="Object Detector":
 		ret,img = cap.read()
 		if ret:
 			img = cv2.cvtColor(img,cv2.COLOR_RGB2BGR)
-			img1 = yolo(img)
+			img1 = obj(img)
 			space.image(img1)
 			if ss=="stop":
 				cap.release()
@@ -101,6 +103,19 @@ elif ch=="Lie Detection":
 			img1 = lie(img)
 			space3.image(img1)
 			if ss=="stop":
+				cap.release()
+				break
+elif ch=="FACE RECOGNITION":
+	space4 = st.empty()
+	cap = cv2.VideoCapture(0)
+	ss = st.sidebar.text_input(key="stop3",label="stop3")
+	while True:
+		ret, img = cap.read()
+		if ret:
+			img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+			img1 = facr(img)
+			space4.image(img1)
+			if ss =="stop":
 				cap.release()
 				break
 else:
